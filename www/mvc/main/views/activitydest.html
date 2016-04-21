@@ -1,0 +1,21 @@
+<div ui-view="">
+	<div style="height: 50%">
+		<img ng-src="{{data.pic}}" width="100%">
+	</div>
+	<div class="row">
+		<div class="col-md-5 col-md-offset-5">
+			<p>{{data.time}}</p>
+			<button class="btn-primary" ng-click="goMap(data.activityid)">{{data.address}}</button>
+		</div>
+		<p align="center">{{data.title}}</p>
+		<hr>
+	</div>
+	<div class="row">
+		<div class="col-md-10 col-md-offset-2">
+			<p>{{data.desc}}</p>
+		</div>
+	</div>
+	<div align="center" style="position: absolute;bottom: 0px;left: 30%;width: 40%;">
+		<p class="btn-primary">add to timeWell</p>
+	</div>
+</div>

@@ -1,0 +1,16 @@
+{
+  "apps": [{
+    "name": "Calendar_app",
+    "script": "www/production.js",
+    "cwd": "/Users/mac/Desktop/some_node_app/Calendar_app//Users/mac/Desktop/some_node_app/Calendar_app",
+    "exec_mode": "cluster",
+    "instances": 0,
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}

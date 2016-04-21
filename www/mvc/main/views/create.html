@@ -1,0 +1,27 @@
+<div class="row">
+	<form action="/create/create/" method="post" enctype="multipart/form-data">
+		<input class="btn btn-primary" type="submit" value="取消">
+		<input class="btn btn-primary pull-right" type="submit" value="确认">
+		<div class="form-group">
+			<label>标题</label>
+			<input type="text" name="title" class="form-control"  >
+		</div>
+		<div class="form-group">
+	    	<label >相册/图片</label>
+	    	<input type="file" class="form-control"  name="image" placeholder="">
+	  	</div>
+		<div class="form-group">
+	    	<label >日期选择</label>
+	    	<input type="text" name="date" class="form-control" id="date">
+	  	</div>
+	  	<div class="form-group">
+	    	<label >地址选择</label>
+	    	<input type="text" id="address" name="address" class="form-control">
+	  	</div>
+	  	<div class="form-group">
+		    <label >评论</label>
+		    <input type="text" name="comment" class="form-control" placeholder="您的评论">
+		</div>
+	</form>
+</div>
+<div id="datePlugin"></div>

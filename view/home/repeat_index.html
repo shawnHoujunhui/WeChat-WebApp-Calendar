@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<%include header.html%>
+	<style type="text/css">
+		.mui-plus.mui-android header.mui-bar{
+			display: none;
+		}
+		.mui-plus.mui-android .mui-bar-nav~.mui-content{
+			padding: 0;
+		}
+		.title{
+			margin: 20px 15px 7px;
+			color: #6d6d72;
+			font-size: 15px;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择列表</h1>
+		</header>
+		<div class="mui-content">
+			<div class="title">
+				pleace select
+			</div>
+			<ul class="mui-table-view">
+				 <li class="mui-table-view-cell">Never</li>
+		         <li class="mui-table-view-cell">Every day</li>
+		         <li class="mui-table-view-cell">Every week</li>
+		         <li class="mui-table-view-cell">Every two week</li>
+		         <li class="mui-table-view-cell">Every month</li>
+		         <li class="mui-table-view-cell">Every year</li>
+			</ul>
+		</div>
+		<input type="hidden" name="" value="<%=address%>" class="address">
+	</body>
+	<script type="text/javascript">
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		var address = $(".address").val();
+		var	starttime = '<%=starttime%>';
+		var	endtime = '<%=endtime%>';
+
+		$(".mui-table-view-cell").click(function(event) {
+			window.location="/create/index?repeat="+$(this).text()+"&address="+address+"&starttime="+starttime+"&endtime="+endtime;;
+		});
+	</script>
+</html>
