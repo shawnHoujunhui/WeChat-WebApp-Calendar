@@ -12,5 +12,11 @@ module.exports=think.controller(Base,{
 			console.log(data);
 			self.display();
 		})
+	},
+	deleteAction:function(self){
+		var id = self.get("activityid");
+		self.model('activity').where({activityid:id}).delete().then(function(data){
+			self.json({'msg':"Delete Success"})
+		})
 	}
 });

@@ -25,7 +25,7 @@ module.exports=think.controller(Base,{
 				var title = self.post('title');
 				var endtime = self.post('endtime');
 				console.log(self.post());
-				var insertId = myModel.add({title:title,pic:filename,desc:comment,starttime:starttime,endtime:endtime}).then(function(insertId){
+				var insertId = myModel.add({title:title,pic:filename,address:address,desc:comment,starttime:starttime,endtime:endtime}).then(function(insertId){
 					// self.json({'status':'1','msg':state.Success,'msg':'创建成功'});
 					self.redirect('/ok/index?activityid='+insertId);
 				});
