@@ -8,6 +8,8 @@ module.exports = think.controller(Base, {
 		self.assign('starttime',self.get('starttime'));
 		self.assign('endtime',self.get('endtime'));
 		self.assign('address',self.get('address'));
+		self.assign('activityid',self.get('activityid'));
+		self.assign('type',self.get('type'))
 		self.display();
 	}
 });

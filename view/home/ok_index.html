@@ -1,35 +1,74 @@
 <!DOCTYPE html>
 <html>
-  <%include header.html%>
-  <body style="padding: 0;margin: 0;">
-  	<div id="main" style="width:100%;background: url(../../../upload/<%=data.pic%>) no-repeat;background-size:100% 100%;">
-  	</div>
-  	<div class="row" id="header" style="background-color: orange;">
-  		<h2 style="color: white;margin-left: 30px;"><%=data.title%></h2>	
-  	</div>
-  	<div class="container">
-	  	<div class="row" id="time">
-			<h5>
-	        	<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-time"></span>
-	        	<span style="font-size: 13x;margin-left: 10px;"><%=data.starttime%> - <%=data.endtime%></span>
-	    	</h5>
-	    	<h5 style="margin-top: 20px">
-		        <span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-map-marker"></span>
-	    	    <span style="font-size: 13px;margin-left: 10px;"><%=data.address%></span>
-		    </h5>
-	  	</div>
-	  	<div id="footer" class="row" style="position: absolute;bottom: 5px;text-align: center;width: 100%">
-			<hr>
-        	<span style="color: orange;font-size: 15px;font-weight:bold;">Add To TimeWell</span>
-	  	</div>
-  	</div>
-  </body>
-  <script type="text/javascript">
-  	var height = window.screen.height;
-  	document.getElementById("main").style.height=(height/2)+'px';
-    document.getElementById("header").style.height=(height/2/5)+'px';
-    document.getElementById("desc").style.height=(height/2/3)+'px';
-    document.getElementById("footer").style.height=(height/2/4/2/2)+'px';
+<%include header.html%>
+<body style="padding: 0;margin: 0;">
+<div id="main" style="width:100%;background: url(../../../upload/<%=data.pic%>) no-repeat;background-size:100% 100%;">
+</div>
+<div class="row" id="header" style="background-color: orange;">
+	<h2 style="color: white;margin-left: 30px;"><%=data.title%></h2>
+</div>
+<div class="container">
+	<div class="row" id="time">
+		<h5>
+			<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-time"></span>
+			<span style="font-size: 13x;margin-left: 10px;"><%=data.starttime%>-<%=data.endtime%></span>
+		</h5>
+		<h5 style="margin-top: 20px">
+			<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-map-marker"></span>
+			<span style="font-size: 13px;margin-left: 10px;"><%=data.address%></span>
+		</h5>
+		<h5 style="margin-top: 20px">
+			<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-comment"></span>
+			<span style="font-size: 13px;margin-left: 10px;"><%=data.desc%></span>
 
-  </script>
+		</h5>
+	</div>
+	<div id="footer" class="row" style="position: absolute;bottom: 25px;text-align: center;width: 100%">
+		<hr>
+		<span onclick="mdelete(<%=data.activityid%>);" style="color: orange;float:right; font-size: 15px;font-weight:bold;">Remove</span>
+
+		<span onclick="mupdate(<%=data.activityid%>);" style="color: orange;float:left; font-size: 15px;font-weight:bold;">Update</span>
+		</hr>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	var height = window.screen.height;
+	document.getElementById("main").style.height=(height/2)+'px';
+	document.getElementById("header").style.height=(height/2/5)+'px';
+	document.getElementById("footer").style.height=(height/2/4/2/2)+'px';
+
+	function mdelete(id){
+		$.get("/ok/delete?activityid="+id).success(function(response){
+			console.log(response);
+			if(response.msg == "删除成功"){
+				$('#myModal').modal('show');
+				setTimeout(function(){
+					window.location.href="/index/index";
+				},2000);
+			}
+		});
+	}
+
+	function mupdate(id){
+		window.location.href="/update/index?activityid="+id;
+	}
+</script>
+
+<div class="modal fade" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">提醒</h4>
+			</div>
+			<div class="modal-body">
+				<p>正在跳转首页</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
 </html>

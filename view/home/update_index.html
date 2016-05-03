@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<%include header.html%>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<body class="container">
+<form action="/update/update/" method="post" enctype="multipart/form-data" id="myForm">
+    <div class="row">
+        <p class="pull-left" style="color: orange;font-size: 20px;margin-top: 5px;margin-left: 10px;" onclick="gotoindex();">Cancel</p>
+        <input type="button" onclick="create();" class="pull-right" style="color: orange;font-size: 20px;background-color: white;border-color: white;
+    height: 34px" value="Confirm"/>
+    </div>
+    <div class="row">
+        <div id="localImag">
+            <img id="preview" src="#" width="100%" style="display: none;"></div>
+    </div>
+    <div class="row">
+        <div class="input-group">
+            <input type="text" name="title" value="<%=data.title%>" class="form-control title" placeholder="Title">
+				<span class="input-group-addon">
+					<a href="#picture" class="glyphicon glyphicon-camera">
+                    </a>
+				</span>
+        </div>
+    </div>
+    <div class="row" style="padding-left: 20px;padding-top: 10px;">
+        <span class="glyphicon glyphicon-time" style="font-size: 20px;"></span>
+        <span style="padding-left: 10px;">All-day</span>
+        <div class="mui-switch mui-active pull-right" style="margin-right: 10px;">
+            <div class="mui-switch-handle"></div>
+        </div>
+    </div>
+    <div class="row" style="padding-left: 50px;margin-top: 15px;">
+			<span style="font-size: 15px;font-weight: bolder;">
+			<%if(data.starttime!=''){%>
+			<div id="result1" class="btn btn-date starttime" data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}'><%=data.starttime%></div>
+			<%}else{%>
+				<div id="result1" class="btn btn-date starttime" data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}'>Start Time</div>
+			<%}%>
+			<input style="display: none" type="text" value='<%=data.starttime%>' name="starttime" id="starttime">
+			</span>
+    </div>
+    <div class="row" style="padding-left: 50px;margin-top: 15px;">
+			<span style="font-size: 15px;font-weight: bolder;">
+			<%if(data.endtime!=''){%>
+				<div id="result2" class="btn btn-date endtime" data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}'><%=data.endtime%></div>
+			<%}else{%>
+				<div id="result2" class="btn btn-date endtime" data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}'>End Time</div>
+			<%}%>
+			<input style="display: none" type="text" value="<%=data.endtime%>" name="endtime" id="endtime">
+			</span>
+    </div>
+    <div class="row" style="padding-left: 50px;margin-top: 15px;">
+			<span style="font-size: 15px;font-weight: bolder;">
+			<% if(data.repeat != ''){%>
+				<div id="result3" class="btn rep" onclick="repeat();"><%=data.repeat%></div>
+			<%}else{%>
+				<div id="result3" class="btn rep" onclick="repeat();">No-repeat</div>
+			<%}%>
+			</span>
+    </div>
+    <div class="row">
+        <div class="input-group" style="margin-top: 20px;">
+            <span class="input-group-addon"><b class="glyphicon glyphicon-map-marker"></b></span>
+            <input type="text" class="form-control" name="location" value="<%=data.address%>" id="location" onclick="locationGet();" placeholder="Location">
+        </div>
+        <div class="input-group" style="margin-top: 1px;">
+            <span class="input-group-addon"><b class="glyphicon glyphicon-comment"></b></span>
+            <input type="text" class="form-control" name="comment" placeholder="Comment" id="comment">
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+
+    <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom row">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#">拍照或录像</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a href="#">选取现有的</a>
+            </li>
+        </ul>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#picture"><b>取消</b></a>
+            </li>
+        </ul>
+    </div>
+
+    <input type="hidden" name="activityid" value="<%=data.activityid%>">
+
+    <input type="file" name="image" id="doc" style="width:150px;display: none;" onchange="javascript:setImagePreview();">
+</form>
+</body>
+<script type="text/javascript">
+    var mrepeat = '<%=data.repeat%>';
+    var address = '<%=data.address%>';
+    var pic = '<%=data.pic%>';
+    if (pic != '') {
+        pic = '../upload/'+'<%=data.pic%>';
+    }
+    var learid = '<%=data.activityid%>';
+
+    // wx.config({
+    //     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    //     appId: '', // 必填，公众号的唯一标识
+    //     timestamp: , // 必填，生成签名的时间戳
+    //     nonceStr: '', // 必填，生成签名的随机串
+    //     signature: '',// 必填，签名，见附录1
+    //     jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    // });
+
+    function gotoindex(){
+        window.location="/index/index";
+    }
+
+    // input file 图片预览
+    //下面用于图片上传预览功能
+    function setImagePreview(avalue) {
+        var docObj=document.getElementById("doc");
+
+        var imgObjPreview=document.getElementById("preview");
+        if(docObj.files &&docObj.files[0]){
+            //火狐下，直接设img属性
+            imgObjPreview.style.display = 'block';
+            imgObjPreview.style.width = "100%";
+            imgObjPreview.style.height = '180px';
+            //imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+            imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+        }
+        else{
+            //IE下，使用滤镜
+            docObj.select();
+            var imgSrc = document.selection.createRange().text;
+            var localImagId = document.getElementById("localImag");
+            //必须设置初始大小
+            localImagId.style.width = "100%";
+            localImagId.style.height = "180px";
+            //图片异常的捕捉，防止用户修改后缀来伪造图片
+            try{
+                localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+            }
+            catch(e){
+                alert("您上传的图片格式不正确，请重新选择!");
+                return false;
+            }
+            imgObjPreview.style.display = 'none';
+            document.selection.empty();
+        }
+
+        return true;
+    }
+
+    function initPic(){
+        if(pic != ''){
+            var docObj=document.getElementById("doc");
+            //IE下，使用滤镜
+            docObj.select();
+            var imgObjPreview=document.getElementById("preview");
+            //必须设置初始大小
+            imgObjPreview.style.display = 'block';
+            imgObjPreview.src = pic;
+        }
+    }
+
+    initPic();
+
+
+    mui.init({
+        swipeBack:true //启用右滑关闭功能
+    });
+    mui('.mui-content .mui-switch').each(function() { //循环所有toggle
+        //toggle.classList.contains('mui-active') 可识别该toggle的开关状态
+        this.parentNode.querySelector('span').innerText = '状态：' + (this.classList.contains('mui-active') ? 'true' : 'false');
+        /**
+         * toggle 事件监听
+         */
+        this.addEventListener('toggle', function(event) {
+            //event.detail.isActive 可直接获取当前状态
+            this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
+        });
+    });
+
+
+    // var location = document.getElementById("location");
+    // 跳转到地址索取
+    function locationGet(){
+        var mstarttime = document.querySelector('.starttime').innerText;
+        var mendtime = document.querySelector('.endtime').innerText;
+        window.location.href="/map/index?repeat="+mrepeat
+                +"&starttime="+mstarttime+"&endtime="+mendtime
+                +"&activityid="+learid+"&type=2";
+    }
+
+
+    function repeat(){
+        var mstarttime = document.querySelector('.starttime').innerText;
+        var mendtime = document.querySelector('.endtime').innerText;
+        window.location.href="/repeat/index?address="
+                +address+"&starttime="+mstarttime
+                +"&endtime="+mendtime
+                +"&activityid="+learid+"&type=2";
+    }
+
+
+    function create(){
+        // 验证机制
+        var starttime = $("input[name='starttime']").val();
+        var endtime = $("input[name='endtime']").val();
+        var starttime_date = new Date(starttime);
+        var enttime_date = new Date(endtime);
+        if(starttime_date >= enttime_date){
+            alert("结束时间不可大于开始时间");
+            return;
+        }
+        var maddress = document.getElementById('location').value;
+        var mtitle = document.querySelector('.title').value;
+        var mrepeat = document.querySelector('.rep').innerText;
+        if(maddress == ''){
+            alert('地址不可为空');
+            return;
+        }
+
+        if(mtitle == ''){
+            alert('标题不可为空');
+            return;
+        }
+
+        if(mrepeat == ''){
+            alert("周期不可为空");
+            return;
+        }
+
+
+        $("#myForm").submit();
+    }
+
+    (function($) {
+        $.init();
+
+        // $("#comment").click(function(){
+        // 	console.log('comment');
+        // })
+
+        console.log($(".mui-popover-action li>a"));
+        $(".mui-popover-action li>a").each(function(i,btn){
+            btn.addEventListener('tap',function(){
+                var a = this,
+                        parent;
+                //根据点击按钮，反推当前是哪个actionsheet
+                for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+                    if (parent.classList.contains('mui-popover-action')) {
+                        break;
+                    }
+                }
+                //关闭actionsheet
+                mui('#' + parent.id).popover('toggle');
+                console.log("你刚点击了\"" + a.innerHTML + "\"按钮");
+                document.getElementById('doc').click();
+            });
+        })
+
+        var result = $('#result')[0];
+        var btns = $('.btn-date');
+        btns.each(function(i, btn) {
+            btn.addEventListener('tap', function() {
+                var optionsJson = this.getAttribute('data-options') || '{}';
+                var options = JSON.parse(optionsJson);
+                var id = this.getAttribute('id');
+                /*
+                 * 首次显示时实例化组件
+                 * 示例为了简洁，将 options 放在了按钮的 dom 上
+                 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+                 */
+                var picker = new $.DtPicker(options);
+                picker.show(function(rs) {
+                    /*
+                     * rs.value 拼合后的 value
+                     * rs.text 拼合后的 text
+                     * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+                     * rs.m 月，用法同年
+                     * rs.d 日，用法同年
+                     * rs.h 时，用法同年
+                     * rs.i 分（minutes 的第二个字母），用法同年
+                     */
+                    btn.innerText= rs.text;
+                    console.log(btn.className);
+                    if(btn.className=='btn btn-date starttime'){
+                        document.getElementById("starttime").value=rs.text;
+                    }
+                    else{
+                        document.getElementById("endtime").value=rs.text;
+                    }
+                    /*
+                     * 返回 false 可以阻止选择框的关闭
+                     * return false;
+                     */
+                    /*
+                     * 释放组件资源，释放后将将不能再操作组件
+                     * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+                     * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+                     * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+                     */
+                    picker.dispose();
+                });
+            }, false);
+        });
+    })(mui);
+
+
+</script>
+</html>

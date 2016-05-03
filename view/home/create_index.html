@@ -6,7 +6,7 @@
 <form action="/create/create/" method="post" enctype="multipart/form-data" id="myForm">
 	<div class="row">
 		<p class="pull-left" style="color: orange;font-size: 20px;margin-top: 5px;margin-left: 10px;" onclick="gotoindex();">Cancel</p>
-		<input type="submit" class="pull-right" style="color: orange;font-size: 20px;background-color: white;border-color: white;
+		<input type="button" onclick="create();" class="pull-right" style="color: orange;font-size: 20px;background-color: white;border-color: white;
     height: 34px" value="Confirm"/>
 	</div>
 	<div class="row">
@@ -15,10 +15,9 @@
 	</div>
 	<div class="row">
 		<div class="input-group">
-			<input type="text" name="title" data-bv-field="titlename" class="form-control title" placeholder="Title">
+			<input type="text" name="title" class="form-control title" placeholder="Title">
 				<span class="input-group-addon">
-					<a href="#picture" class="glyphicon glyphicon-camera">
-					</a>
+					<a href="#picture" class="glyphicon glyphicon-camera"></a>
 				</span>
 		</div>
 	</div>
@@ -36,7 +35,7 @@
 			<%}else{%>
 				<div id="result1" class="btn btn-date starttime" data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}'>Start Time</div>
 			<%}%>
-			<input style="display: none;" value="<%=starttime%>" type="text" name="starttime" id="starttime">
+			<input style="display: none" value="<%=starttime%>" type="text" name="starttime" id="starttime">
 			</span>
 	</div>
 	<div class="row" style="padding-left: 50px;margin-top: 15px;">
@@ -46,7 +45,7 @@
 			<%}else{%>
 				<div id="result2" class="btn btn-date endtime" data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}'>End Time</div>
 			<%}%>
-			<input style="display: none;" type="text" name="endtime"  value="<%=endtime%>" id="endtime">
+			<input style="display: none" value="<%=endtime%>" type="text" name="endtime" id="endtime">
 			</span>
 	</div>
 	<div class="row" style="padding-left: 50px;margin-top: 15px;">
@@ -201,7 +200,35 @@
 		// 	console.log("complete");
 		// });
 
-		document.getElementById("myForm").submit();
+		// 验证机制
+		var starttime = $("input[name='starttime']").val();
+		var endtime = $("input[name='endtime']").val();
+		var starttime_date = new Date(starttime);
+		var enttime_date = new Date(endtime);
+		if(starttime_date >= enttime_date){
+			alert("结束时间不可大于开始时间");
+			return;
+		}
+		var maddress = document.getElementById('location').value;
+		var mtitle = document.querySelector('.title').value;
+		var mrepeat = document.querySelector('.rep').innerText;
+		if(maddress == ''){
+			alert('地址不可为空');
+			return;
+		}
+
+		if(mtitle == ''){
+			alert('标题不可为空');
+			return;
+		}
+
+		if(mrepeat == ''){
+			alert("周期不可为空");
+			return;
+		}
+
+
+		$("#myForm").submit();
 	}
 
 	(function($) {
@@ -276,53 +303,6 @@
 		});
 	})(mui);
 
-
-	$(function(){
-		$('#myForm').bootstrapValidator({
-			message: 'This value is not valid',
-			feedbackIcons: {
-				valid: 'glyphicon glyphicon-ok',
-				invalid: 'glyphicon glyphicon-remove',
-				validating: 'glyphicon glyphicon-refresh'
-			},
-			fields: {
-				titlename: {
-					message: 'The titlename is not valid',
-					validators: {
-						notEmpty: {
-							message: 'The titlename is required and cannot be empty'
-						},
-						stringLength: {
-							min: 6,
-							max: 30,
-							message: 'The titlename must be more than 6 and less than 30 characters long'
-						},
-						regexp: {
-							regexp: /^[a-zA-Z0-9_\.]+$/,
-							message: 'The titlename can only consist of alphabetical, number, dot and underscore'
-						},
-						remote: {
-							url: 'remote.php',
-							message: 'The titlename is not available'
-						},
-						different: {
-							field: 'password',
-							message: 'The titlename and password cannot be the same as each other'
-						}
-					}
-				},
-				mydate: {
-					validators: {
-						date: {
-							format: 'YYYY/MM/DD HH:ii:ss',
-							message: 'The mydate is not valid'
-						}
-					}
-				},
-			}
-		});
-
-	})
 
 </script>
 </html>

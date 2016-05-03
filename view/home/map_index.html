@@ -1,112 +1,114 @@
 <!DOCTYPE html>
 <html>
-	<%include header.html%>
-	<script src="http://maps.google.cn/maps/api/js?region=cn&language=zh-CN&key=AIzaSyDr6gDdW0cc0oTiykUceTNeTGgyepunGLs&libraries=places"
-  type="text/javascript"></script>
+<%include header.html%>
+<script src="http://maps.google.cn/maps/api/js?region=cn&language=zh-CN&key=AIzaSyDr6gDdW0cc0oTiykUceTNeTGgyepunGLs&libraries=places"
+		type="text/javascript"></script>
 <body>
-	<div class="mui-input-row mui-search" style="margin-bottom: -13px;">
-		<input class="mui-input-clear" id="autocomplete" placeholder="Enter a city" type="search" autocomplete="off">
-		<button id='showCountryPicker' style="display: none" class="mui-btn mui-btn-block" type='button'>选择国家</button>
-	</div>
-	
-	<div class="container">
-		<div class="row" id="map" ></div>
-	</div>
-	
-	<input type="hidden" id="myCountry">
+<div class="mui-input-row mui-search" style="margin-bottom: -13px;">
+	<input class="mui-input-clear" id="autocomplete" placeholder="Enter a city" type="search" autocomplete="off">
+	<button id='showCountryPicker' style="display: none" class="mui-btn mui-btn-block" type='button'>选择国家</button>
+</div>
 
-	 <div id="listing"  style="width: 100%">
-      <table id="resultsTable" style="width: 100%">
-        <tbody id="results"></tbody>
-      </table>
-    </div>
+<div class="container">
+	<div class="row" id="map" ></div>
+</div>
 
-    <div style="display: none">
-      <div id="info-content">
-        <table>
-          <tr id="iw-url-row" class="iw_table_row">
-            <td id="iw-icon" class="iw_table_icon"></td>
-            <td id="iw-url"></td>
-          </tr>
-          <tr id="iw-address-row" class="iw_table_row">
-            <td class="iw_attribute_name">Address:</td>
-            <td id="iw-address"></td>
-          </tr>
-          <tr id="iw-phone-row" class="iw_table_row">
-            <td class="iw_attribute_name">Telephone:</td>
-            <td id="iw-phone"></td>
-          </tr>
-          <tr id="iw-rating-row" class="iw_table_row">
-            <td class="iw_attribute_name">Rating:</td>
-            <td id="iw-rating"></td>
-          </tr>
-          <tr id="iw-website-row" class="iw_table_row">
-            <td class="iw_attribute_name">Website:</td>
-            <td id="iw-website"></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-	<script>
-		(function($, doc) {
-			$.init();
-			$.ready(function() {
-				//普通示例
-				var countryPicker = new $.PopPicker();
-				countryPicker.setData([{
-					value: 'all',
-					text: 'all'
-				}, {
-					value: 'us',
-					text: 'U.S.A'
-				}, {
-					value: 'pt',
-					text: 'Portugal'
-				}, {
-					value: 'es',
-					text: 'Spain'
-				}, {
-					value: 'za',
-					text: 'South Africa'
-				}, {
-					value: 'it',
-					text: 'Italy'
-				}, {
-					value: 'nz',
-					text: 'New Zealand'
-				}, {
-					value: 'mx',
-					text: 'Mexico'
-				}, {
-					value: 'de',
-					text: 'Germany'
-				}, {
-					value: 'fr', 
-					text: 'France'
-				}]);
-				var showCountryPickerButton = doc.getElementById('showCountryPicker');
-				var mCountryPickerResult = doc.getElementById('myCountry');
-				showCountryPickerButton.addEventListener('tap', function(event) {
-					countryPicker.show(function(items) {
-						mCountryPickerResult.value = JSON.stringify(items[0]);
-						//返回 false 可以阻止选择框的关闭
-						//return false;
-					});
-				}, false);
-			});
-		})(mui, document);
-	</script>
-	<script type="text/javascript">
+<input type="hidden" id="myCountry">
+
+<div id="listing"  style="width: 100%">
+	<table id="resultsTable" style="width: 100%">
+		<tbody id="results"></tbody>
+	</table>
+</div>
+
+<div style="display: none">
+	<div id="info-content">
+		<table>
+			<tr id="iw-url-row" class="iw_table_row">
+				<td id="iw-icon" class="iw_table_icon"></td>
+				<td id="iw-url"></td>
+			</tr>
+			<tr id="iw-address-row" class="iw_table_row">
+				<td class="iw_attribute_name">Address:</td>
+				<td id="iw-address"></td>
+			</tr>
+			<tr id="iw-phone-row" class="iw_table_row">
+				<td class="iw_attribute_name">Telephone:</td>
+				<td id="iw-phone"></td>
+			</tr>
+			<tr id="iw-rating-row" class="iw_table_row">
+				<td class="iw_attribute_name">Rating:</td>
+				<td id="iw-rating"></td>
+			</tr>
+			<tr id="iw-website-row" class="iw_table_row">
+				<td class="iw_attribute_name">Website:</td>
+				<td id="iw-website"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<script>
+	(function($, doc) {
+		$.init();
+		$.ready(function() {
+			//普通示例
+			var countryPicker = new $.PopPicker();
+			countryPicker.setData([{
+				value: 'all',
+				text: 'all'
+			}, {
+				value: 'us',
+				text: 'U.S.A'
+			}, {
+				value: 'pt',
+				text: 'Portugal'
+			}, {
+				value: 'es',
+				text: 'Spain'
+			}, {
+				value: 'za',
+				text: 'South Africa'
+			}, {
+				value: 'it',
+				text: 'Italy'
+			}, {
+				value: 'nz',
+				text: 'New Zealand'
+			}, {
+				value: 'mx',
+				text: 'Mexico'
+			}, {
+				value: 'de',
+				text: 'Germany'
+			}, {
+				value: 'fr',
+				text: 'France'
+			}]);
+			var showCountryPickerButton = doc.getElementById('showCountryPicker');
+			var mCountryPickerResult = doc.getElementById('myCountry');
+			showCountryPickerButton.addEventListener('tap', function(event) {
+				countryPicker.show(function(items) {
+					mCountryPickerResult.value = JSON.stringify(items[0]);
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+			}, false);
+		});
+	})(mui, document);
+</script>
+<script type="text/javascript">
 	var repeat='<%=repeat%>';
 	var	starttime = '<%=starttime%>';
 	var	endtime = '<%=endtime%>';
 	var height = window.screen.height;
-  	document.getElementById("map").style.height=(height/2)+'px';
+	var type = '<%=type%>'
+	var activityid = '<%=activityid%>';
+	document.getElementById("map").style.height=(height/2)+'px';
 
 	mui.init({
 		swipeBack: true //启用右滑关闭功能
 	});
-	 //语音识别完成事件
+	//语音识别完成事件
 	// document.getElementById("search").addEventListener('recognized', function(e) {
 	// 	console.log(e.detail.value);
 	// });
@@ -122,339 +124,346 @@
 	var hostnameRegexp = new RegExp('^https?://.+?/');
 
 	var countries = {
-	  'au': {
-	    center: {lat: -25.3, lng: 133.8},
-	    zoom: 4
-	  },
-	  'br': {
-	    center: {lat: -14.2, lng: -51.9},
-	    zoom: 3
-	  },
-	  'ca': {
-	    center: {lat: 62, lng: -110.0},
-	    zoom: 3
-	  },
-	  'fr': {
-	    center: {lat: 46.2, lng: 2.2},
-	    zoom: 5
-	  },
-	  'de': {
-	    center: {lat: 51.2, lng: 10.4},
-	    zoom: 5
-	  },
-	  'mx': {
-	    center: {lat: 23.6, lng: -102.5},
-	    zoom: 4
-	  },
-	  'nz': {
-	    center: {lat: -40.9, lng: 174.9},
-	    zoom: 5
-	  },
-	  'it': {
-	    center: {lat: 41.9, lng: 12.6},
-	    zoom: 5
-	  },
-	  'za': {
-	    center: {lat: -30.6, lng: 22.9},
-	    zoom: 5
-	  },
-	  'es': {
-	    center: {lat: 40.5, lng: -3.7},
-	    zoom: 5
-	  },
-	  'pt': {
-	    center: {lat: 39.4, lng: -8.2},
-	    zoom: 6
-	  },
-	  'us': {
-	    center: {lat: 37.1, lng: -95.7},
-	    zoom: 3
-	  },
-	  'uk': {
-	    center: {lat: 54.8, lng: -4.6},
-	    zoom: 5
-	  }
+		'au': {
+			center: {lat: -25.3, lng: 133.8},
+			zoom: 4
+		},
+		'br': {
+			center: {lat: -14.2, lng: -51.9},
+			zoom: 3
+		},
+		'ca': {
+			center: {lat: 62, lng: -110.0},
+			zoom: 3
+		},
+		'fr': {
+			center: {lat: 46.2, lng: 2.2},
+			zoom: 5
+		},
+		'de': {
+			center: {lat: 51.2, lng: 10.4},
+			zoom: 5
+		},
+		'mx': {
+			center: {lat: 23.6, lng: -102.5},
+			zoom: 4
+		},
+		'nz': {
+			center: {lat: -40.9, lng: 174.9},
+			zoom: 5
+		},
+		'it': {
+			center: {lat: 41.9, lng: 12.6},
+			zoom: 5
+		},
+		'za': {
+			center: {lat: -30.6, lng: 22.9},
+			zoom: 5
+		},
+		'es': {
+			center: {lat: 40.5, lng: -3.7},
+			zoom: 5
+		},
+		'pt': {
+			center: {lat: 39.4, lng: -8.2},
+			zoom: 6
+		},
+		'us': {
+			center: {lat: 37.1, lng: -95.7},
+			zoom: 3
+		},
+		'uk': {
+			center: {lat: 54.8, lng: -4.6},
+			zoom: 5
+		}
 	};
 
 	function initMap() {
-	  map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: countries['us'].zoom,
-	    center: countries['us'].center,
-	    mapTypeControl: false,
-	    panControl: false,
-	    zoomControl: false,
-	    streetViewControl: false
-	  });
+		map = new google.maps.Map(document.getElementById('map'), {
+			zoom: countries['us'].zoom,
+			center: countries['us'].center,
+			mapTypeControl: false,
+			panControl: false,
+			zoomControl: false,
+			streetViewControl: false
+		});
 
-	  infoWindow = new google.maps.InfoWindow({
-	    content: document.getElementById('info-content')
-	  });
-
-	  
-	  autocomplete = new google.maps.places.Autocomplete(
-	      /** @type {!HTMLInputElement} */ (
-	          document.getElementById('autocomplete')), {
-	        types: ['(cities)'],
-	        componentRestrictions: countryRestrict
-	      });
-	  places = new google.maps.places.PlacesService(map);
-
-	  autocomplete.addListener('place_changed', onPlaceChanged);
+		infoWindow = new google.maps.InfoWindow({
+			content: document.getElementById('info-content')
+		});
 
 
-	  // document.getElementById('country').addEventListener(
-	      // 'change', setAutocompleteCountry);
+		autocomplete = new google.maps.places.Autocomplete(
+				/** @type {!HTMLInputElement} */ (
+						document.getElementById('autocomplete')), {
+					types: ['(cities)'],
+					componentRestrictions: countryRestrict
+				});
+		places = new google.maps.places.PlacesService(map);
+
+		autocomplete.addListener('place_changed', onPlaceChanged);
+
+
+		// document.getElementById('country').addEventListener(
+		// 'change', setAutocompleteCountry);
 	}
 
-	
+
 	function onPlaceChanged() {
-	  var place = autocomplete.getPlace();
-	  if (place.geometry) {
-	    map.panTo(place.geometry.location);
-	    map.setZoom(15);
-	    search();
-	  } else {
-	    document.getElementById('autocomplete').placeholder = 'Enter a city';
-	  }
+		var place = autocomplete.getPlace();
+		if (place.geometry) {
+			map.panTo(place.geometry.location);
+			map.setZoom(15);
+			search();
+		} else {
+			document.getElementById('autocomplete').placeholder = 'Enter a city';
+		}
 	}
 
 	function search() {
-	  var search = {
-	    bounds: map.getBounds(),
-	    types: ['lodging']
-	  };
+		var search = {
+			bounds: map.getBounds(),
+			types: ['lodging']
+		};
 
-	  places.nearbySearch(search, function(results, status) {
-	    if (status === google.maps.places.PlacesServiceStatus.OK) {
-	      clearResults();
-	      clearMarkers();
-	      
-	      for (var i = 0; i < results.length; i++) {
-	        var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
-	        var markerIcon = MARKER_PATH + markerLetter + '.png';
-	      
-	        markers[i] = new google.maps.Marker({
-	          position: results[i].geometry.location,
-	          animation: google.maps.Animation.DROP,
-	          icon: markerIcon
-	        });
-	        markers[i].placeResult = results[i];
-	        google.maps.event.addListener(markers[i], 'click', showInfoWindow);
-	        setTimeout(dropMarker(i), i * 100);
-	        addResult(results[i], i);
-	      }
-	    }
-	  });
+		places.nearbySearch(search, function(results, status) {
+			if (status === google.maps.places.PlacesServiceStatus.OK) {
+				clearResults();
+				clearMarkers();
+
+				for (var i = 0; i < results.length; i++) {
+					var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
+					var markerIcon = MARKER_PATH + markerLetter + '.png';
+
+					markers[i] = new google.maps.Marker({
+						position: results[i].geometry.location,
+						animation: google.maps.Animation.DROP,
+						icon: markerIcon
+					});
+					markers[i].placeResult = results[i];
+					google.maps.event.addListener(markers[i], 'click', showInfoWindow);
+					setTimeout(dropMarker(i), i * 100);
+					addResult(results[i], i);
+				}
+			}
+		});
 	}
 
 	function clearMarkers() {
-	  for (var i = 0; i < markers.length; i++) {
-	    if (markers[i]) {
-	      markers[i].setMap(null);
-	    }
-	  }
-	  markers = [];
+		for (var i = 0; i < markers.length; i++) {
+			if (markers[i]) {
+				markers[i].setMap(null);
+			}
+		}
+		markers = [];
 	}
 
 	function setAutocompleteCountry() {
-	  var country = document.getElementById('country').value;
-	  console.log(country);
-	  if (country == 'all') {
-	    autocomplete.setComponentRestrictions([]);
-	    map.setCenter({lat: 15, lng: 0});
-	    map.setZoom(2);
-	  } else {
-	    autocomplete.setComponentRestrictions({'country': country});
-	    if(countries[country] != undefined){
-	    	map.setCenter(countries[country].center);
-	    	map.setZoom(countries[country].zoom);
-	    }
-	  }
-	  clearResults();
-	  clearMarkers();
+		var country = document.getElementById('country').value;
+		console.log(country);
+		if (country == 'all') {
+			autocomplete.setComponentRestrictions([]);
+			map.setCenter({lat: 15, lng: 0});
+			map.setZoom(2);
+		} else {
+			autocomplete.setComponentRestrictions({'country': country});
+			if(countries[country] != undefined){
+				map.setCenter(countries[country].center);
+				map.setZoom(countries[country].zoom);
+			}
+		}
+		clearResults();
+		clearMarkers();
 	}
 
 	function dropMarker(i) {
-	  return function() {
-	    markers[i].setMap(map);
-	  };
+		return function() {
+			markers[i].setMap(map);
+		};
 	}
 
 	function addResult(result, i) {
-	  var results = document.getElementById('results');
-	  var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
-	  var markerIcon = MARKER_PATH + markerLetter + '.png';
+		var results = document.getElementById('results');
+		var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
+		var markerIcon = MARKER_PATH + markerLetter + '.png';
 
-	  var tr = document.createElement('tr');
-	  tr.style.backgroundColor = (i % 2 === 0 ? '#F0F0F0' : '#FFFFFF');
-	  tr.onclick = function() {
-	    google.maps.event.trigger(markers[i], 'click');
-	    window.location='/create/index?address='+result.name+"&repeat="+repeat+"&starttime="+starttime+"&endtime="+endtime;
-	    console.log(result.name)
-	  };
+		var tr = document.createElement('tr');
+		tr.style.backgroundColor = (i % 2 === 0 ? '#F0F0F0' : '#FFFFFF');
+		tr.onclick = function() {
+			google.maps.event.trigger(markers[i], 'click');
+			if (type=='2') {
+				window.location='/update/index?address='+result.name+"&repeat="+repeat+"&starttime="+starttime+"&endtime="+endtime+"&activityid="+activityid;
+				console.log(result.name)
+			}
+			else{
+				window.location='/create/index?address='+result.name+"&repeat="+repeat+"&starttime="+starttime+"&endtime="+endtime+"&activityid="+activityid;
+				console.log(result.name)
+			}
 
-	  var iconTd = document.createElement('td');
-	  var nameTd = document.createElement('td');
-	  var icon = document.createElement('img');
-	  icon.src = markerIcon;
-	  icon.setAttribute('class', 'placeIcon');
-	  icon.setAttribute('className', 'placeIcon');
-	  var name = document.createTextNode(result.name);
-	  iconTd.appendChild(icon);
-	  nameTd.appendChild(name);
-	  tr.appendChild(iconTd);
-	  tr.appendChild(nameTd);
-	  results.appendChild(tr);
+		};
+
+		var iconTd = document.createElement('td');
+		var nameTd = document.createElement('td');
+		var icon = document.createElement('img');
+		icon.src = markerIcon;
+		icon.setAttribute('class', 'placeIcon');
+		icon.setAttribute('className', 'placeIcon');
+		var name = document.createTextNode(result.name);
+		iconTd.appendChild(icon);
+		nameTd.appendChild(name);
+		tr.appendChild(iconTd);
+		tr.appendChild(nameTd);
+		results.appendChild(tr);
 	}
 
 	function clearResults() {
-	  // var results = document.getElementById('results');
-	  // while (results.childNodes[0]) {
-	  //   results.removeChild(results.childNodes[0]);
-	  // }
+		// var results = document.getElementById('results');
+		// while (results.childNodes[0]) {
+		//   results.removeChild(results.childNodes[0]);
+		// }
 	}
 
-	
+
 	function showInfoWindow() {
-	  var marker = this;
-	  
-	  
-	  places.getDetails({placeId: marker.placeResult.place_id},
-	      function(place, status) {
-	        if (status !== google.maps.places.PlacesServiceStatus.OK) {
-	          return;
-	        }
-	        infoWindow.open(map, marker);
-	        buildIWContent(place);
-	  });
+		var marker = this;
+
+
+		places.getDetails({placeId: marker.placeResult.place_id},
+				function(place, status) {
+					if (status !== google.maps.places.PlacesServiceStatus.OK) {
+						return;
+					}
+					infoWindow.open(map, marker);
+					buildIWContent(place);
+				});
 	}
 
-	
+
 	function buildIWContent(place) {
-	  document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
-	      'src="' + place.icon + '"/>';
-	  document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
-	      '">' + place.name + '</a></b>';
-	  document.getElementById('iw-address').textContent = place.vicinity;
+		document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
+				'src="' + place.icon + '"/>';
+		document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
+				'">' + place.name + '</a></b>';
+		document.getElementById('iw-address').textContent = place.vicinity;
 
-	  if (place.formatted_phone_number) {
-	    document.getElementById('iw-phone-row').style.display = '';
-	    document.getElementById('iw-phone').textContent =
-	        place.formatted_phone_number;
-	  } else {
-	    document.getElementById('iw-phone-row').style.display = 'none';
-	  }
+		if (place.formatted_phone_number) {
+			document.getElementById('iw-phone-row').style.display = '';
+			document.getElementById('iw-phone').textContent =
+					place.formatted_phone_number;
+		} else {
+			document.getElementById('iw-phone-row').style.display = 'none';
+		}
 
-	  
-	  if (place.rating) {
-	    var ratingHtml = '';
-	    for (var i = 0; i < 5; i++) {
-	      if (place.rating < (i + 0.5)) {
-	        ratingHtml += '&#10025;';
-	      } else {
-	        ratingHtml += '&#10029;';
-	      }
-	    document.getElementById('iw-rating-row').style.display = '';
-	    document.getElementById('iw-rating').innerHTML = ratingHtml;
-	    }
-	  } else {
-	    document.getElementById('iw-rating-row').style.display = 'none';
-	  }
 
-	  
-	  if (place.website) {
-	    var fullUrl = place.website;
-	    var website = hostnameRegexp.exec(place.website);
-	    if (website === null) {
-	      website = 'http://' + place.website + '/';
-	      fullUrl = website;
-	    }
-	    document.getElementById('iw-website-row').style.display = '';
-	    document.getElementById('iw-website').textContent = website;
-	  } else {
-	    document.getElementById('iw-website-row').style.display = 'none';
-	  }
+		if (place.rating) {
+			var ratingHtml = '';
+			for (var i = 0; i < 5; i++) {
+				if (place.rating < (i + 0.5)) {
+					ratingHtml += '&#10025;';
+				} else {
+					ratingHtml += '&#10029;';
+				}
+				document.getElementById('iw-rating-row').style.display = '';
+				document.getElementById('iw-rating').innerHTML = ratingHtml;
+			}
+		} else {
+			document.getElementById('iw-rating-row').style.display = 'none';
+		}
+
+
+		if (place.website) {
+			var fullUrl = place.website;
+			var website = hostnameRegexp.exec(place.website);
+			if (website === null) {
+				website = 'http://' + place.website + '/';
+				fullUrl = website;
+			}
+			document.getElementById('iw-website-row').style.display = '';
+			document.getElementById('iw-website').textContent = website;
+		} else {
+			document.getElementById('iw-website-row').style.display = 'none';
+		}
 	}
 	function init() {
-        if (navigator.geolocation) {
-            //获取当前地理位置
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var coords = position.coords;
-                //console.log(position);
-                //指定一个google地图上的坐标点，同时指定该坐标点的横坐标和纵坐标
-                var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
-                var myOptions = {
-                    zoom: 14,    //设定放大倍数
-                    center: latlng,  //将地图中心点设定为指定的坐标点
-                    mapTypeId: google.maps.MapTypeId.ROADMAP //指定地图类型
-                };
-                //创建地图，并在页面map中显示
-                // var map = new google.maps.Map(document.getElementById("map"), myOptions);
-                //在地图上创建标记
-                var marker = new google.maps.Marker({
-                    position: latlng,    //将前面设定的坐标标注出来
-                    map: map //将该标注设置在刚才创建的map中
-                });
-		        google.maps.event.addListener(marker, 'click', showInfoWindow);
-                //标注提示窗口
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "当前位置：<br/>经度：" + latlng.lat() + "<br/>维度：" + latlng.lng()   //提示窗体内的提示信息
-                });
-                //打开提示窗口
-                infoWindow.open(map, marker);
+		if (navigator.geolocation) {
+			//获取当前地理位置
+			navigator.geolocation.getCurrentPosition(function (position) {
+						var coords = position.coords;
+						//console.log(position);
+						//指定一个google地图上的坐标点，同时指定该坐标点的横坐标和纵坐标
+						var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+						var myOptions = {
+							zoom: 14,    //设定放大倍数
+							center: latlng,  //将地图中心点设定为指定的坐标点
+							mapTypeId: google.maps.MapTypeId.ROADMAP //指定地图类型
+						};
+						//创建地图，并在页面map中显示
+						// var map = new google.maps.Map(document.getElementById("map"), myOptions);
+						//在地图上创建标记
+						var marker = new google.maps.Marker({
+							position: latlng,    //将前面设定的坐标标注出来
+							map: map //将该标注设置在刚才创建的map中
+						});
+						google.maps.event.addListener(marker, 'click', showInfoWindow);
+						//标注提示窗口
+						var infoWindow = new google.maps.InfoWindow({
+							content: "当前位置：<br/>经度：" + latlng.lat() + "<br/>维度：" + latlng.lng()   //提示窗体内的提示信息
+						});
+						//打开提示窗口
+						infoWindow.open(map, marker);
 
-                setTimeout(function(){
-                	var search = {
-					    bounds: map.getBounds(),
-					    types: ['lodging']
-					};
-	                places.nearbySearch(search, function(results, status) {
-					    if (status === google.maps.places.PlacesServiceStatus.OK) {
-					      console.log(results);
-					      
-					      for (var i = 0; i < results.length; i++) {
-					        var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
-					        var markerIcon = MARKER_PATH + markerLetter + '.png';
-					      
-					        markers[i] = new google.maps.Marker({
-					          position: results[i].geometry.location,
-					          animation: google.maps.Animation.DROP,
-					          icon: markerIcon
-					        });
-					        markers[i].placeResult = results[i];
-					        google.maps.event.addListener(markers[i], 'click', showInfoWindow);
-					        setTimeout(dropMarker(i), i * 100);
-					        addResult(results[i], i);
-					      }
-					    }
+						setTimeout(function(){
+							var search = {
+								bounds: map.getBounds(),
+								types: ['lodging']
+							};
+							places.nearbySearch(search, function(results, status) {
+								if (status === google.maps.places.PlacesServiceStatus.OK) {
+									console.log(results);
+
+									for (var i = 0; i < results.length; i++) {
+										var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
+										var markerIcon = MARKER_PATH + markerLetter + '.png';
+
+										markers[i] = new google.maps.Marker({
+											position: results[i].geometry.location,
+											animation: google.maps.Animation.DROP,
+											icon: markerIcon
+										});
+										markers[i].placeResult = results[i];
+										google.maps.event.addListener(markers[i], 'click', showInfoWindow);
+										setTimeout(dropMarker(i), i * 100);
+										addResult(results[i], i);
+									}
+								}
+							});
+						},2000);
+
+					},
+					function (error) {
+						//处理错误
+						switch (error.code) {
+							case 1:
+								alert("位置服务被拒绝。");
+								break;
+							case 2:
+								alert("暂时获取不到位置信息。");
+								break;
+							case 3:
+								alert("获取信息超时。");
+								break;
+							default:
+								alert("未知错误。");
+								break;
+						}
 					});
-                },2000);
-
-            },
-            function (error) {
-                //处理错误
-                switch (error.code) {
-                    case 1:
-                        alert("位置服务被拒绝。");
-                        break;
-                    case 2:
-                        alert("暂时获取不到位置信息。");
-                        break;
-                    case 3:
-                        alert("获取信息超时。");
-                        break;
-                    default:
-                        alert("未知错误。");
-                        break;
-                }
-            });
-        } else {
-            alert("你的浏览器不支持HTML5来获取地理位置信息。");
-        }
-    }
+		} else {
+			alert("你的浏览器不支持HTML5来获取地理位置信息。");
+		}
+	}
 
 	initMap();
-    init();
-	</script>
+	init();
+</script>
 </body>
 </html>
