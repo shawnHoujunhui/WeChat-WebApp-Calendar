@@ -19,6 +19,29 @@
     <div class="container" id="desc" style="color:#A9A9A9;font-size: 14px;">
       <%=data.data[0].desc%>
     </div>
+
+    <div class="container" id="share" style="width: 100%;text-align: center;position: absolute;bottom: 50px">
+      <hr>
+      <span style="color: orange;font-size: 15px;font-weight:bold;"><span class="glyphicon glyphicon-share"></span>Share Event via</span><br>
+
+      <a class="btn btn-success" href="#whatsapp://send?text=https://s3-ap-southeast-2.amazonaws.com/timewell/invite.html?eventid<%=data.data[0].activityid%>">
+        <i class="fa fa-whatsapp fa-2x" aria-hidden="true" title="Send invite via Whatsapp"></i>
+        <span class="sr-only">Send invite via Whatsapp</span>
+      </a>
+
+      <a class="btn btn-primary" href="#fb-messenger://compose?=TimeWell://event/<%=data.data[0].activityid%>">
+        <i class="fa fa-facebook-f fa-2x" aria-hidden="true" title="Send invite via Facebook Messenger"></i>
+        <span class="sr-only">Send invite via Facebook Messenger</span>
+      </a>
+
+      <a class="btn btn-success" href="http://www.goal.com">
+        <i class="fa fa-weixin fa-2x" aria-hidden="true" title="Send invite via WeChat"></i>
+        <span class="sr-only">Send invite via WeChat</span>
+      </a>
+
+
+    </div>
+
     <div class="container" id="footer" style="width: 100%;text-align: center;position: absolute;bottom: 50px">
         <hr>
         <span style="color: orange;font-size: 15px;font-weight:bold;">Add To TimeWell</span>
@@ -29,6 +52,7 @@
   	document.getElementById("main").style.height=(height/2)+'px';
     document.getElementById("header").style.height=(height/2/3)+'px';
     document.getElementById("desc").style.height=(height/2/3)+'px';
+    document.getElementById("share").style.height=(height/2/3)+'px';
     document.getElementById("footer").style.height=(height/2/4/2/2)+'px';
 
   </script>
