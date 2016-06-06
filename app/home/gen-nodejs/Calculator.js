@@ -31,13 +31,13 @@ Calculator_add_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.word = new ttypes.Work();
-        this.word.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.word = new ttypes.Work();
+          this.word.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -85,13 +85,13 @@ Calculator_add_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.Work();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.Work();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -117,10 +117,10 @@ Calculator_add_result.prototype.write = function(output) {
 };
 
 CalculatorClient = exports.Client = function(output, pClass) {
-    this.output = output;
-    this.pClass = pClass;
-    this.seqid = 0;
-    this._reqs = {};
+  this.output = output;
+  this.pClass = pClass;
+  this.seqid = 0;
+  this._reqs = {};
 };
 CalculatorClient.prototype = {};
 CalculatorClient.prototype.add = function(word, callback) {

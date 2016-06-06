@@ -11,24 +11,18 @@
 	<div class="row" id="time">
 		<h5>
 			<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-time"></span>
-			<span style="font-size: 13x;margin-left: 10px;"><%=data.starttime%>-<%=data.endtime%></span>
+			<span style="font-size: 13x;margin-left: 10px;"><%=data.starttime%> - <%=data.endtime%></span>
 		</h5>
 		<h5 style="margin-top: 20px">
 			<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-map-marker"></span>
 			<span style="font-size: 13px;margin-left: 10px;"><%=data.address%></span>
 		</h5>
-		<h5 style="margin-top: 20px">
-			<span style="font-size: 20px;margin-left: 30px;" class="glyphicon glyphicon-comment"></span>
-			<span style="font-size: 13px;margin-left: 10px;"><%=data.desc%></span>
-
-		</h5>
 	</div>
 	<div id="footer" class="row" style="position: absolute;bottom: 25px;text-align: center;width: 100%">
 		<hr>
-		<span onclick="mdelete(<%=data.activityid%>);" style="color: orange;float:right; font-size: 15px;font-weight:bold;">Remove</span>
-
-		<span onclick="mupdate(<%=data.activityid%>);" style="color: orange;float:left; font-size: 15px;font-weight:bold;">Update</span>
-		</hr>
+		<span onclick="mdelete(<%=data.activityid%>);" style="color: orange;font-size: 15px;float:right;font-weight:bold;">Remove</span>
+		<br/>
+		<span onclick="mupdate(<%=data.activityid%>);" style="color: orange;font-size: 15px;float:left;font-weight:bold;">Update</span>
 	</div>
 </div>
 </body>

@@ -16,7 +16,6 @@ module.exports = think.controller(Base, {
             data.endtime = self.get('endtime') ? self.get('endtime') : data.endtime;
             data.address = self.get('address') ? self.get('address') : data.address;
             data.repeat = self.get('repeat') ? self.get('repeat') : data.repeat;
-            data.cooment = self.get('cooment') ? self.get('cooment') : data.cooment;
             self.assign('data',data);
             self.display();
         })

@@ -29,7 +29,7 @@ define(['./common/module','Map','jquery','Model'], function (controllers,BMap,$,
             	$scope.address = response.data[0].address;
             }
             else{
-            	mp.centerAndZoom("杭州", 12);
+            	mp.centerAndZoom("Melbourne", 12);
             }
         });
 

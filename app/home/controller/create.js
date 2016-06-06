@@ -1,16 +1,17 @@
 'use strict';
 var Base = require('./base.js');
 var fs = require('fs'),
-    Util = require('util');
+	Util = require('util');
 var time = require('../module/DateTime');
 var state = require('../module/State');
-var http = require("http");
+var https = require("https");
+var qs = require('querystring');
 
 module.exports=think.controller(Base,{
 	//创建活动
 	createAction:function(self){
-		if(this.file()['image']['path'] == undefined){
-			return self.json({'status':state.Failed});
+		if(this.file()['image']['size'] == 0){
+			return self.json({'msg':'请上传文件'});
 		}
 		var filename = time.Now()+".png";
 		var newPath = self.config("RESOURCE_PATH")+filename;
@@ -44,8 +45,7 @@ module.exports=think.controller(Base,{
 		self.assign('address',address);
 		self.assign('repeat',repeat);
 		self.display();
-	}
-
+	},
 	userAction:function(self){
 		var myModel = this.model("user");
 		var myThis = this;
@@ -53,7 +53,7 @@ module.exports=think.controller(Base,{
 			if(userid == undefined){
 				console.log('信息不存在');
 				// 获取token
-				var req = https.get("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22867bec839877f3&secret=315d6b5c77f4ee330d3e31d3d8d83188&code="+self.get("code")+"&grant_type=authorization_code",
+				var req = https.get("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2b97d5a71ae4b44e&secret=956574e607b4054a34de539e0f2d934a&code="+self.get("code")+"&grant_type=authorization_code",
 					function(res){
 						res.on('data',function(body){
 							var data = JSON.parse(body.toString());

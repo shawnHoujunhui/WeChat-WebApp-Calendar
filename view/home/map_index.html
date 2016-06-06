@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html>
 <%include header.html%>
-<script src="http://maps.google.cn/maps/api/js?region=cn&language=zh-CN&key=AIzaSyDr6gDdW0cc0oTiykUceTNeTGgyepunGLs&libraries=places"
+<script src="http://maps.google.cn/maps/api/js?region=cn&language=zh-CN&key=AIzaSyAEc33XSj31ra8AaWAZz8TsFcnPfx_Njqs&libraries=places"
 		type="text/javascript"></script>
 <body>
 <div class="mui-input-row mui-search" style="margin-bottom: -13px;">
 	<input class="mui-input-clear" id="autocomplete" placeholder="Enter a city" type="search" autocomplete="off">
-	<button id='showCountryPicker' style="display: none" class="mui-btn mui-btn-block" type='button'>选择国家</button>
+	<select id="country">
+		<option value="all">All</option>
+		<option value="au">Australia</option>
+		<option value="ch">China</option>>
+		<option value="br">Brazil</option>
+		<option value="ca">Canada</option>
+		<option value="fr">France</option>
+		<option value="de">Germany</option>
+		<option value="mx">Mexico</option>
+		<option value="nz">New Zealand</option>
+		<option value="it">Italy</option>
+		<option value="za">South Africa</option>
+		<option value="es">Spain</option>
+		<option value="pt">Portugal</option>
+		<option value="us" selected>U.S.A.</option>
+		<option value="uk">United Kingdom</option>
+	</select>
 </div>
 
 <div class="container">
@@ -86,13 +102,6 @@
 			}]);
 			var showCountryPickerButton = doc.getElementById('showCountryPicker');
 			var mCountryPickerResult = doc.getElementById('myCountry');
-			showCountryPickerButton.addEventListener('tap', function(event) {
-				countryPicker.show(function(items) {
-					mCountryPickerResult.value = JSON.stringify(items[0]);
-					//返回 false 可以阻止选择框的关闭
-					//return false;
-				});
-			}, false);
 		});
 	})(mui, document);
 </script>
@@ -119,7 +128,7 @@
 	var map, places, infoWindow;
 	var markers = [];
 	var autocomplete;
-	var countryRestrict = {'country': 'us'};
+	var countryRestrict = {'country': 'all'};
 	var MARKER_PATH = 'https://maps.gstatic.com/intl/en_us/mapfiles/marker_green';
 	var hostnameRegexp = new RegExp('^https?://.+?/');
 
@@ -127,6 +136,10 @@
 		'au': {
 			center: {lat: -25.3, lng: 133.8},
 			zoom: 4
+		},
+		'ch':{
+			center: {lat:35.8, lng:104.1 },
+			zoom: 5
 		},
 		'br': {
 			center: {lat: -14.2, lng: -51.9},
@@ -204,8 +217,8 @@
 		autocomplete.addListener('place_changed', onPlaceChanged);
 
 
-		// document.getElementById('country').addEventListener(
-		// 'change', setAutocompleteCountry);
+		document.getElementById('country').addEventListener(
+				'change', setAutocompleteCountry);
 	}
 
 

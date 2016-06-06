@@ -10,31 +10,42 @@ module.exports = think.controller(Base, {
    * @return {Promise} []
    */
   indexAction: function(self){
-      // var thrift = require('thrift'),
-      //     Calculator = require('../gen-nodejs/Calculator'),
-      //     ttypes = require('../gen-nodejs/hello_types');
+    // var thrift = require('thrift'),
+    //     Calculator = require('../gen-nodejs/Calculator'),
+    //     ttypes = require('../gen-nodejs/hello_types');
 
-      // var connection = thrift.createConnection("localhost", 9090),
-      //     multiplexer = new  thrift.Multiplexer(),
-      //     service = multiplexer.createClient("Service",Calculator, connection);
+    // var connection = thrift.createConnection("localhost", 9090),
+    //     multiplexer = new  thrift.Multiplexer(),
+    //     service = multiplexer.createClient("Service",Calculator, connection);
 
-      // connection.on('error', function(err) {
-      //     console.error(err);
-      // });
+    // connection.on('error', function(err) {
+    //     console.error(err);
+    // });
 
-      // var work = new ttypes.Work({num1: 1, num2: 30, op: ttypes.Operation.ADD, comment: this.get('name')});
+    // var work = new ttypes.Work({num1: 1, num2: 30, op: ttypes.Operation.ADD, comment: this.get('name')});
 
-      // service.add(work, function(err, data) {
-      //     if (err) {
-      //         console.log(err);
-      //     } else {
-      //         self.json(data);
-      //     }
-      //     connection.end();
-      // });
+    // service.add(work, function(err, data) {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         self.json(data);
+    //     }
+    //     connection.end();
+    // });
 
-      self.display('index');
-      
+    // 判定有没有登录
+    this.session("userid").then(function(userid){
+      if(userid == undefined){
+        self.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22867bec839877f3&redirect_uri=http%3a%2f%2f121.41.42.119%3a8360%2fcreate%2fuser%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect');
+      }
+      else{
+        console.log(userid);
+      }
+    });
+
+
+    self.display('index');
+
   },
   //用户列表
   userlistAction:function(self){
@@ -70,7 +81,7 @@ module.exports = think.controller(Base, {
     var userid=this.get('userid');
     this.model('user').where({userid:userid}).delete().then(function(data){
       self.json({'status':'1','msg':'删除成功'});
-    });    
+    });
   },
   //修改用户
   userupdateAction:function(self){
@@ -83,18 +94,18 @@ module.exports = think.controller(Base, {
     this.model('user').where({userid:userid}).find().then(function(data){
       console.log(data['name']);
       var update = '';
-      
+
       if (name!="") {
         update+='name="'+name+'"';
       }
       else{
         update+='name="'+data['name']+'"';
       }
-      
+
       if (nickname!=""){
         update+=',nickname="'+nickname+'"';
       }
-      
+
       if(createtime!=""){
         update+=',createtime="'+createtime+'"';
       };
