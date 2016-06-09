@@ -9,11 +9,11 @@ module.exports = {
   log_connect: true,
   adapter: {
     mysql: {
-      host: '127.0.0.1',
+      host: '121.41.42.11',
       port: '3306',
       database: 'think_cal',
       user: 'root',
-      password: '556600',
+      password: 'xuanxuan',
       prefix: 'think_',
       encoding: 'utf8'
     },
