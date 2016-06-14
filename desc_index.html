@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<%include header.html%>
+<body style="padding: 0;margin: 0;">
+<div id="main" style="width:100%;background: url(../../../upload/<%=data.data[0].pic%>) no-repeat;background-size:100% 100%;">
+</div>
+<h3 style="color: white;position: relative;top:-50px;margin-left: 30px;margin-bottom: -50px;"><%=data.data[0].title%></h3>
+<div id="header" style="padding-left: 20px;padding-right: 20px;">
+  <h5>
+    <span style="font-size: 20px" class="glyphicon glyphicon-time"></span>
+    <span style="font-size: 13x;margin-left: 10px;"><%=data.data[0].starttime%> - <%=data.data[0].endtime%></span>
+  </h5>
+  <h5 style="margin-top: 20px">
+    <span style="font-size: 20px" class="glyphicon glyphicon-map-marker"></span>
+    <span style="font-size: 13px;margin-left: 10px;"><%=data.data[0].address%></span>
+  </h5>
+  <hr style="margin-top: 5px;margin-bottom: 5px;">
+  <h5 style="margin-top: 20px">
+        <span style="font-size: 20px" class="glyphicon glyphicon-user"></span>
+        <span style="font-size: 13px;margin-left: 10px;">
+        <%rel_data.forEach(function(item){%>
+          <img src="<%=item.headimgurl%>" style="width: 30px;height: 30px;" />
+          <span><%=item.nickname%></span>
+        <%})%>
+
+        </span>
+  </h5>
+  <hr style="margin-top: 5px;margin-bottom: 5px;">
+</div>
+<div class="container" id="desc" style="color:#A9A9A9;font-size: 14px;">
+  <%=data.data[0].desc%>
+</div>
+
+
+<!-- **JUNHUI** HERE IS WHERE IVE ADDED THE SHARE BUTTONS. i've also added the source in the header page for the share icons -->
+<div class="container" id="share" style="width: 100%;text-align: center;position: absolute;bottom: 50px">
+  <hr>
+  <span style="color: orange;font-size: 15px;font-weight:bold;"><span class="glyphicon glyphicon-share"></span>Share Event via</span><br>
+
+  <a class="btn btn-success" href="whatsapp://send?text=https://s3-ap-southeast-2.amazonaws.com/timewelldeeplink/test.html?eventid=<%=data.data[0].activityid%>">
+    <i class="fa fa-whatsapp fa-2x" aria-hidden="true" title="Send invite via Whatsapp"></i>
+    <span class="sr-only">Send invite via Whatsapp</span>
+  </a>
+
+  <a class="btn btn-primary" href="fb-messenger://share?link=https://s3-ap-southeast-2.amazonaws.com/timewelldeeplink/test.html?eventid=<%=data.data[0].activityid%>">
+    <i class="fa fa-facebook-f fa-2x" aria-hidden="true" title="Send invite via Facebook Messenger"></i>
+    <span class="sr-only">Send invite via Facebook Messenger</span>
+  </a>
+</div>
+
+<div class="container" id="footer" style="width: 100%;text-align: center;position: absolute;bottom: 50px">
+  <hr style="height: 5px;">
+  <%if(has=='yes'){%>
+  <span class="remove" data-id="<%=data.data[0].activityid%>" style="color: orange;font-size: 15px;font-weight:bold;">Remove To TimeWell</span>
+  <%}else{%>
+  <span class="add" data-id="<%=data.data[0].activityid%>" style="color: orange;font-size: 15px;font-weight:bold;">Add To TimeWell</span>
+  <%}%>
+</div>
+</body>
+<script type="text/javascript">
+  var height = window.screen.height;
+  document.getElementById("main").style.height=(height/2)+'px';
+  document.getElementById("header").style.height=(height/2/2)+'px';
+  document.getElementById("desc").style.height=(height/2/4)+'px';
+  document.getElementById("footer").style.height=(height/2/4/2/2)+'px';
+
+  mui('#footer').on('tap', '.remove', function(e) {
+    var id = this.getAttribute('data-id');
+    window.location.href="/add/remove?activityid="+id;
+  });
+  mui('#footer').on('tap', '.add', function(e) {
+    var id = this.getAttribute('data-id');
+    window.location.href="/add/add?activityid="+id;
+  });
+</script>
+</html>
