@@ -30,6 +30,24 @@
 <div class="container" id="desc" style="color:#A9A9A9;font-size: 14px;">
   <%=data.data[0].desc%>
 </div>
+
+
+<!-- **JUNHUI** HERE IS WHERE IVE ADDED THE SHARE BUTTONS. i've also added the source in the header page for the share icons -->
+<div class="container" id="share" style="width: 100%;text-align: center;position: absolute;bottom: 50px">
+  <hr>
+  <span style="color: orange;font-size: 15px;font-weight:bold;"><span class="glyphicon glyphicon-share"></span>Share Event via</span><br>
+
+  <a class="btn btn-success" href="whatsapp://send?text=https://s3-ap-southeast-2.amazonaws.com/timewelldeeplink/test.html?eventid=<%=data.data[0].activityid%>">
+    <i class="fa fa-whatsapp fa-2x" aria-hidden="true" title="Send invite via Whatsapp"></i>
+    <span class="sr-only">Send invite via Whatsapp</span>
+  </a>
+
+  <a class="btn btn-primary" href="fb-messenger://share?link=https://s3-ap-southeast-2.amazonaws.com/timewelldeeplink/test.html?eventid=<%=data.data[0].activityid%>">
+    <i class="fa fa-facebook-f fa-2x" aria-hidden="true" title="Send invite via Facebook Messenger"></i>
+    <span class="sr-only">Send invite via Facebook Messenger</span>
+  </a>
+</div>
+
 <div class="container" id="footer" style="width: 100%;text-align: center;position: absolute;bottom: 50px">
   <hr style="height: 5px;">
   <%if(has=='yes'){%>
